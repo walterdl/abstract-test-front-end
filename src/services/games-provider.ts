@@ -1,5 +1,5 @@
 // Own
-import { Game, GameType, GameTypeNames } from 'common/game-type'
+import { Game, GameType } from 'common/game'
 
 export default class GamesProvider {
   private dummyGames: Game[] = [
@@ -7,22 +7,22 @@ export default class GamesProvider {
       id: '1',
       name: 'Pachange clásica',
       date: new Date(),
-      localeDate: new Date().toLocaleString(),
-      type: new GameType(GameTypeNames.Football)
+      type: GameType.FOOTBALL,
+      placeId: ''
     },
     {
       id: '2',
       name: 'Pachange moderna',
       date: new Date(),
-      localeDate: new Date().toLocaleString(),
-      type: new GameType(GameTypeNames.SFootball)
+      type: GameType.SMALL_FOOTBALL,
+      placeId: ''
     },
     {
       id: '3',
       name: 'Con Nico',
       date: new Date(),
-      localeDate: new Date().toLocaleString(),
-      type: new GameType(GameTypeNames.XSFootball)
+      type: GameType.EXTRA_SMALL_FOOTBALL,
+      placeId: ''
     }
   ]
 

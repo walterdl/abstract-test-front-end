@@ -13,7 +13,9 @@ import Box from '@material-ui/core/Box'
 
 // Own
 // Types
-import { Game } from 'common/game-type'
+import { Game, getGameTypeFriendlyName } from 'common/game'
+// Components
+import GameFormDialog from './game-form-dialog'
 // Services
 import GamesListProvider from 'services/games-provider'
 
@@ -25,6 +27,7 @@ interface State {
   games: Game[];
   loading: boolean;
   error?: string | null;
+  showForm?: boolean;
 }
 
 export default class GamesList extends Component<Props, State> {
@@ -41,6 +44,8 @@ export default class GamesList extends Component<Props, State> {
       games: [],
       loading: true
     }
+
+    this.handleGameCreation = this.handleGameCreation.bind(this)
   }
 
   public componentDidMount() {
@@ -68,9 +73,25 @@ export default class GamesList extends Component<Props, State> {
           {this.renderLoadingIndicator()}
           {this.renderError()}
           {this.renderGamesList()}
+          {this.renderGameFormDialog()}
         </Paper>
       </>
     )
+  }
+
+  private renderOptions(): ReactElement | null {
+    if (this.canRenderGamesList) {
+      return (
+        <Button
+        color="primary"
+        variant="outlined"
+        onClick={() => this.setGameFormDialogOpenState(true)}>
+          Crear partido
+        </Button>
+      )
+    }
+
+    return null
   }
 
   private renderLoadingIndicator(): ReactElement | null {
@@ -131,8 +152,8 @@ export default class GamesList extends Component<Props, State> {
               <TableCell component="th" scope="row">
                 {game.name}
               </TableCell>
-              <TableCell>{game.localeDate}</TableCell>
-              <TableCell>{game.type.getFriendlyName()}</TableCell>
+              <TableCell>{game.date.toLocaleString()}</TableCell>
+              <TableCell>{getGameTypeFriendlyName(game.type)}</TableCell>
               <TableCell>
                 <Button color="primary">Ver</Button>
                 &nbsp;
@@ -145,13 +166,28 @@ export default class GamesList extends Component<Props, State> {
     )
   }
 
-  private renderOptions(): ReactElement | null {
-    if (this.canRenderGamesList) {
-      return (
-        <Button color="primary" variant="outlined">Crear partido</Button>
-      )
+  private renderGameFormDialog(): ReactElement | null {
+    if (!this.canRenderGamesList) {
+      return null
     }
 
-    return null
+    return (
+      <GameFormDialog
+        open={this.state.showForm}
+        onClose={() => this.setGameFormDialogOpenState(false)}
+        onGameCreated={this.handleGameCreation}
+      />
+    )
+  }
+
+  private setGameFormDialogOpenState(open: boolean) {
+    this.setState({
+      showForm: open
+    })
+  }
+
+  private handleGameCreation() {
+    // TODO
+    console.log('game created')
   }
 }
