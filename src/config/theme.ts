@@ -20,7 +20,16 @@ const theme = createMuiTheme({
       dark: '#78002e',
       contrastText: '#fff',
     },
-  }
+  },
+  typography: {
+    fontFamily: [
+      'Roboto',
+      'sans-serif',
+      '"Segoe UI"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
 })
 
 const themeWithResponsiveFontSize = responsiveFontSizes(theme)

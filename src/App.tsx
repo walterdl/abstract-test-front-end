@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Switch } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import CssBaseLine from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/styles'
 //
@@ -10,6 +10,7 @@ import { StylesProvider } from '@material-ui/styles'
 // Own
 import theme from 'config/theme'
 import Layout from 'layout'
+import GamesList from 'components/games-list'
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Layout>
             <Switch>
+              <Route path="/" exact component={GamesList} />
             </Switch>
           </Layout>
         </BrowserRouter>
